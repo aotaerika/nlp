@@ -1,0 +1,78 @@
+{% load static %}
+
+<html lang="ja">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{% block title %}{% endblock %}</title>
+{% block header%}
+<header class="masthead text-center text-white">
+  <div class="masthead-content">
+    <div class="container">
+      <h1 class="masthead-heading mb-0">同等品検索アプリ</h1>
+      {% if user.is_authenticated %}
+      <p>こんにちは {{ user.username }}さん </p>
+      
+      
+      <p>発注コードを入力してください。(半角ハイフン無し)</p>
+      <form action="{% url "home"%}" method="POST">
+
+      <input type="text" name="title">
+      {% csrf_token %}
+      <button type="submit">検索</button>
+      </form>
+      <hr class="cp_hr04" />
+      {% if title%}
+      <p>品　　名：{{product_name}}</br>
+      カテゴリ：{{category}}</p>
+      {% endif%}
+
+      </br>
+      {% if title%}
+
+      ■仕　様■　優先したい項目をチェックしてください。
+      </br>
+      {%for word in wakati_word%}
+      <label>
+      <input type="checkbox" name="level" value={{word}} checked="checked">
+      {{word}}
+      </label>
+
+      {%endfor%}
+      {% endif%}
+
+      <form action="{% url "tf_idf"%}" method="POST">
+
+      {% csrf_token %}
+      {% if tf_idf%}
+      <input type="submit" name="tf_idf" value="送信する">
+      </form>
+      
+      <p>優先する：{{priority_word}}</p>
+      </form>
+      {% endif%}
+
+      
+      <p> <a href="{% url 'logout'%}">ログアウト</a></p>
+      
+      {% else %}
+      <a href="{% url 'login' %} "class="btn btn-primary btn-xl rounded-pill mt-5">ログイン</a>
+     
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="bg-circle-1 bg-circle"></div>
+  <div class="bg-circle-2 bg-circle"></div>
+  <div class="bg-circle-3 bg-circle"></div>
+  <div class="bg-circle-4 bg-circle"></div>
+</header>
+
+{% endblock  %}
+  </body>
+
+</html>
