@@ -18,7 +18,7 @@ from bs4 import BeautifulSoup
 from django.contrib.auth.decorators import login_required
 
 
-sample_df=pd.read_csv("cut_products.csv",header=0)
+sample_df=pd.read_csv("all_products.csv",header=0)
 sample_df=pd.DataFrame(sample_df)
 
 tagger = MeCab.Tagger('-Owakati')
